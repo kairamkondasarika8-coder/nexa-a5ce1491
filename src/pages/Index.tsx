@@ -1,16 +1,21 @@
 import { useState, useRef, useEffect, useCallback } from "react";
-import { Brain, PanelLeft, Sparkles } from "lucide-react";
+import { Brain, PanelLeft, Sparkles, User, Settings, LogOut } from "lucide-react";
 import ChatSidebar, { type ChatSession } from "@/components/ChatSidebar";
 import ChatMessage, { type Message, type Attachment } from "@/components/ChatMessage";
 import ChatInput from "@/components/ChatInput";
 import TypingIndicator from "@/components/TypingIndicator";
-import ModeSelector, { type AIMode } from "@/components/ModeSelector";
 import SettingsPanel from "@/components/SettingsPanel";
-import LoginDialog from "@/components/LoginDialog";
 import MessageActions from "@/components/MessageActions";
 import PPTMaker from "@/components/PPTMaker";
+import AuthPage from "@/pages/AuthPage";
 import { streamChat } from "@/lib/streamChat";
-
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const createId = () => Math.random().toString(36).slice(2, 10);
 
@@ -22,11 +27,10 @@ const Index = () => {
   const [activeSessionId, setActiveSessionId] = useState("default");
   const [messagesBySession, setMessagesBySession] = useState<Record<string, Message[]>>({});
   const [isTyping, setIsTyping] = useState(false);
-  const [mode, setMode] = useState<AIMode>("general");
   const [settingsOpen, setSettingsOpen] = useState(false);
-  const [loginOpen, setLoginOpen] = useState(false);
   const [pptMakerOpen, setPptMakerOpen] = useState(false);
   const [userName, setUserName] = useState<string | undefined>();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const messages = messagesBySession[activeSessionId] || [];
@@ -38,6 +42,16 @@ const Index = () => {
   }, []);
 
   useEffect(scrollToBottom, [messages, isTyping, scrollToBottom]);
+
+  const handleLogin = (name: string) => {
+    setUserName(name);
+    setIsLoggedIn(true);
+  };
+
+  const handleLogout = () => {
+    setUserName(undefined);
+    setIsLoggedIn(false);
+  };
 
   const handleSend = useCallback(
     async (text: string, attachments: Attachment[]) => {
@@ -76,7 +90,7 @@ const Index = () => {
       try {
         await streamChat({
           messages: chatHistory,
-          mode,
+          mode: "general",
           onDelta: (chunk) => {
             assistantSoFar += chunk;
             setMessagesBySession((prev) => {
@@ -105,7 +119,7 @@ const Index = () => {
         setIsTyping(false);
       }
     },
-    [activeSessionId, messagesBySession, mode]
+    [activeSessionId, messagesBySession]
   );
 
   const handleNewChat = () => {
@@ -158,6 +172,11 @@ const Index = () => {
     synth.speak(utter);
   };
 
+  // Show auth page if not logged in
+  if (!isLoggedIn) {
+    return <AuthPage onLogin={handleLogin} />;
+  }
+
   return (
     <div className="flex h-screen w-full overflow-hidden">
       <ChatSidebar
@@ -172,12 +191,11 @@ const Index = () => {
         onDownload={handleDownload}
         onShare={handleShare}
         onSettingsOpen={() => setSettingsOpen(true)}
-        onLoginOpen={() => setLoginOpen(true)}
+        onLoginOpen={() => {}}
         userName={userName}
       />
 
       <SettingsPanel isOpen={settingsOpen} onClose={() => setSettingsOpen(false)} />
-      <LoginDialog isOpen={loginOpen} onClose={() => setLoginOpen(false)} onLogin={setUserName} />
       <PPTMaker isOpen={pptMakerOpen} onClose={() => setPptMakerOpen(false)} />
 
       <div className="flex-1 flex flex-col min-w-0">
@@ -199,12 +217,39 @@ const Index = () => {
                 <h1 className="font-display font-bold text-lg gradient-text leading-tight flex items-center gap-1">
                   Nexa AI <Sparkles className="w-4 h-4 text-accent-foreground inline" />
                 </h1>
-                <p className="text-[10px] text-muted-foreground/70">AI Assistant • Free to use</p>
+                <p className="text-[10px] text-muted-foreground/70">General Mode • Smart AI Assistant</p>
               </div>
             </div>
           </div>
 
-          <ModeSelector mode={mode} onChange={setMode} />
+          {/* User profile dropdown */}
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <button className="flex items-center gap-2 px-3 py-2 rounded-xl glass hover:glass-strong transition-all group">
+                <div className="w-8 h-8 rounded-lg bg-gradient-primary flex items-center justify-center glow">
+                  <span className="text-primary-foreground text-xs font-bold">
+                    {userName?.charAt(0).toUpperCase() || "U"}
+                  </span>
+                </div>
+                <span className="text-sm font-medium text-foreground hidden sm:inline">{userName}</span>
+              </button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-48 glass-strong border-border/50">
+              <DropdownMenuItem className="gap-2 cursor-pointer">
+                <User className="w-4 h-4" />
+                <span>Profile</span>
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setSettingsOpen(true)} className="gap-2 cursor-pointer">
+                <Settings className="w-4 h-4" />
+                <span>Settings</span>
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem onClick={handleLogout} className="gap-2 cursor-pointer text-destructive">
+                <LogOut className="w-4 h-4" />
+                <span>Logout</span>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </header>
 
         {/* Messages */}
@@ -218,9 +263,9 @@ const Index = () => {
                 <div className="absolute -inset-4 rounded-3xl bg-primary/5 blur-2xl -z-10 animate-pulse-glow" />
               </div>
               <div>
-                <h2 className="font-display font-bold text-3xl gradient-text mb-2">Hello! I'm Nexa ✨</h2>
+                <h2 className="font-display font-bold text-3xl gradient-text mb-2">Hello, {userName}! ✨</h2>
                 <p className="text-sm text-muted-foreground/80 max-w-md">
-                  Your free AI assistant. Send messages, upload files & images, use voice, or try the AI tools below!
+                  I'm Nexa — your smart AI assistant. Ask me anything — coding, ideas, learning, or just chat!
                 </p>
               </div>
               <div className="flex flex-wrap gap-2.5 justify-center max-w-lg">
