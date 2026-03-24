@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback } from "react";
+import { useState, useRef, useCallback, useEffect } from "react";
 import { Send, Mic, MicOff, Paperclip, X, FileVideo, FileText, Wrench } from "lucide-react";
 import type { Attachment } from "./ChatMessage";
 import AIToolsPanel from "./AIToolsPanel";
@@ -8,16 +8,25 @@ interface ChatInputProps {
   onSend: (text: string, attachments: Attachment[]) => void;
   disabled?: boolean;
   onOpenPPTMaker?: () => void;
+  pendingPrompt?: string;
+  onPendingPromptUsed?: () => void;
 }
 
-const ChatInput = ({ onSend, disabled, onOpenPPTMaker }: ChatInputProps) => {
-  const [text, setText] = useState("");
+const ChatInput = ({ onSend, disabled, onOpenPPTMaker, pendingPrompt, onPendingPromptUsed }: ChatInputProps) => {
+  const [text, setText] = useState(pendingPrompt || "");
   const [attachments, setAttachments] = useState<Attachment[]>([]);
   const [isListening, setIsListening] = useState(false);
   const [isDragOver, setIsDragOver] = useState(false);
   const [toolsOpen, setToolsOpen] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const recognitionRef = useRef<any>(null);
+
+  useEffect(() => {
+    if (pendingPrompt) {
+      setText(pendingPrompt);
+      onPendingPromptUsed?.();
+    }
+  }, [pendingPrompt, onPendingPromptUsed]);
 
   const processFiles = useCallback((files: FileList | File[]) => {
     Array.from(files).forEach((file) => {
