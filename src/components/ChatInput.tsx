@@ -135,13 +135,6 @@ const ChatInput = ({ onSend, disabled, onOpenPPTMaker, pendingPrompt, onPendingP
       )}
 
       <div className="flex items-end gap-2">
-        <button
-          onClick={() => setToolsOpen(!toolsOpen)}
-          className={`p-2 rounded-xl transition-colors ${toolsOpen ? "bg-primary/20 text-primary" : "hover:bg-secondary/80 text-muted-foreground hover:text-foreground"}`}
-          title="AI Tools"
-        >
-          <Wrench className="w-5 h-5" />
-        </button>
 
         <button
           onClick={() => fileInputRef.current?.click()}
