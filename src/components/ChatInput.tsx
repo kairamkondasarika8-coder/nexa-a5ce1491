@@ -21,6 +21,13 @@ const ChatInput = ({ onSend, disabled, onOpenPPTMaker, pendingPrompt, onPendingP
   const fileInputRef = useRef<HTMLInputElement>(null);
   const recognitionRef = useRef<any>(null);
 
+  useEffect(() => {
+    if (pendingPrompt) {
+      setText(pendingPrompt);
+      onPendingPromptUsed?.();
+    }
+  }, [pendingPrompt, onPendingPromptUsed]);
+
   const processFiles = useCallback((files: FileList | File[]) => {
     Array.from(files).forEach((file) => {
       const url = URL.createObjectURL(file);
