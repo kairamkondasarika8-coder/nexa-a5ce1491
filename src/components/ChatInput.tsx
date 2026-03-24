@@ -8,6 +8,8 @@ interface ChatInputProps {
   onSend: (text: string, attachments: Attachment[]) => void;
   disabled?: boolean;
   onOpenPPTMaker?: () => void;
+  pendingPrompt?: string;
+  onPendingPromptUsed?: () => void;
 }
 
 const ChatInput = ({ onSend, disabled, onOpenPPTMaker }: ChatInputProps) => {
