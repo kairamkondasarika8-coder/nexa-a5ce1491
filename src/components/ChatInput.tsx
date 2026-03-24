@@ -12,8 +12,8 @@ interface ChatInputProps {
   onPendingPromptUsed?: () => void;
 }
 
-const ChatInput = ({ onSend, disabled, onOpenPPTMaker }: ChatInputProps) => {
-  const [text, setText] = useState("");
+const ChatInput = ({ onSend, disabled, onOpenPPTMaker, pendingPrompt, onPendingPromptUsed }: ChatInputProps) => {
+  const [text, setText] = useState(pendingPrompt || "");
   const [attachments, setAttachments] = useState<Attachment[]>([]);
   const [isListening, setIsListening] = useState(false);
   const [isDragOver, setIsDragOver] = useState(false);
