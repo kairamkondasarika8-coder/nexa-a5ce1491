@@ -2,9 +2,7 @@ import {
   Presentation,
   Code,
   Layout,
-  FileText,
   Bug,
-  Lightbulb,
   Image,
   Sparkles,
 } from "lucide-react";
@@ -18,9 +16,7 @@ const tools = [
   { label: "PPT Maker", icon: Presentation, prompt: "__PPT_MAKER__", color: "text-blue-400" },
   { label: "Code Gen", icon: Code, prompt: "Generate clean, production-ready code for: ", color: "text-green-400" },
   { label: "UI Builder", icon: Layout, prompt: "Generate a modern responsive UI component for: ", color: "text-purple-400" },
-  { label: "Summarizer", icon: FileText, prompt: "Summarize the following into clean bullet points: ", color: "text-amber-400" },
   { label: "Error Solver", icon: Bug, prompt: "Debug and fix this error: ", color: "text-red-400" },
-  { label: "Brainstorm", icon: Lightbulb, prompt: "Give me 10 creative ideas for: ", color: "text-yellow-400" },
   { label: "Image Prompt", icon: Image, prompt: "Generate a detailed image prompt for: ", color: "text-pink-400" },
   { label: "Enhance", icon: Sparkles, prompt: "Improve and enhance the following: ", color: "text-cyan-400" },
 ];
