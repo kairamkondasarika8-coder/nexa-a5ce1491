@@ -2,9 +2,7 @@ import {
   Presentation,
   Code,
   Layout,
-  FileText,
   Bug,
-  Lightbulb,
   Image,
   Sparkles,
 } from "lucide-react";
