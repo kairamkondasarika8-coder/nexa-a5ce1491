@@ -1,7 +1,6 @@
 import { useState, useRef, useCallback, useEffect } from "react";
-import { Send, Mic, MicOff, Paperclip, X, FileVideo, FileText, Wrench } from "lucide-react";
+import { Send, Mic, MicOff, Paperclip, X, FileVideo, FileText } from "lucide-react";
 import type { Attachment } from "./ChatMessage";
-import AIToolsPanel from "./AIToolsPanel";
 import ChatSuggestions from "./ChatSuggestions";
 
 interface ChatInputProps {
@@ -102,7 +101,7 @@ const ChatInput = ({ onSend, disabled, onOpenPPTMaker, pendingPrompt, onPendingP
         visible={!toolsOpen && text.length >= 2}
       />
 
-      <AIToolsPanel isOpen={toolsOpen} onClose={() => setToolsOpen(false)} onSelectTool={handleToolSelect} onOpenPPTMaker={onOpenPPTMaker} />
+      
 
       {/* Attachment previews */}
       {attachments.length > 0 && (
@@ -135,13 +134,6 @@ const ChatInput = ({ onSend, disabled, onOpenPPTMaker, pendingPrompt, onPendingP
       )}
 
       <div className="flex items-end gap-2">
-        <button
-          onClick={() => setToolsOpen(!toolsOpen)}
-          className={`p-2 rounded-xl transition-colors ${toolsOpen ? "bg-primary/20 text-primary" : "hover:bg-secondary/80 text-muted-foreground hover:text-foreground"}`}
-          title="AI Tools"
-        >
-          <Wrench className="w-5 h-5" />
-        </button>
 
         <button
           onClick={() => fileInputRef.current?.click()}
