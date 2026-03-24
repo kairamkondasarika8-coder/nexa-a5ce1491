@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback } from "react";
+import { useState, useRef, useCallback, useEffect } from "react";
 import { Send, Mic, MicOff, Paperclip, X, FileVideo, FileText, Wrench } from "lucide-react";
 import type { Attachment } from "./ChatMessage";
 import AIToolsPanel from "./AIToolsPanel";
