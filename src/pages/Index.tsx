@@ -7,6 +7,7 @@ import TypingIndicator from "@/components/TypingIndicator";
 import SettingsPanel from "@/components/SettingsPanel";
 import MessageActions from "@/components/MessageActions";
 import PPTMaker from "@/components/PPTMaker";
+import DocumentationGenerator from "@/components/DocumentationGenerator";
 import OutputPanel from "@/components/OutputPanel";
 import SmartToolsBar from "@/components/SmartToolsBar";
 import SmartSuggestions from "@/components/SmartSuggestions";
