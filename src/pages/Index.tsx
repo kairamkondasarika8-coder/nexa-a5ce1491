@@ -7,6 +7,7 @@ import TypingIndicator from "@/components/TypingIndicator";
 import SettingsPanel from "@/components/SettingsPanel";
 import MessageActions from "@/components/MessageActions";
 import PPTMaker from "@/components/PPTMaker";
+import DocumentationGenerator from "@/components/DocumentationGenerator";
 import OutputPanel from "@/components/OutputPanel";
 import SmartToolsBar from "@/components/SmartToolsBar";
 import SmartSuggestions from "@/components/SmartSuggestions";
@@ -32,6 +33,7 @@ const Index = () => {
   const [isTyping, setIsTyping] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [pptMakerOpen, setPptMakerOpen] = useState(false);
+  const [docGenOpen, setDocGenOpen] = useState(false);
   const [outputOpen, setOutputOpen] = useState(false);
   const [userName, setUserName] = useState<string | undefined>();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -218,6 +220,7 @@ const Index = () => {
 
       <SettingsPanel isOpen={settingsOpen} onClose={() => setSettingsOpen(false)} />
       <PPTMaker isOpen={pptMakerOpen} onClose={() => setPptMakerOpen(false)} />
+      <DocumentationGenerator isOpen={docGenOpen} onClose={() => setDocGenOpen(false)} />
 
       {/* Main content area */}
       <div className="flex-1 flex flex-col min-w-0">
@@ -287,7 +290,7 @@ const Index = () => {
 
         {/* Smart Tools Bar */}
         <div className="px-4 md:px-6 py-2 border-b border-border/30">
-          <SmartToolsBar onToolAction={handleToolAction} onOpenPPTMaker={() => setPptMakerOpen(true)} />
+          <SmartToolsBar onToolAction={handleToolAction} onOpenPPTMaker={() => setPptMakerOpen(true)} onOpenDocGen={() => setDocGenOpen(true)} />
         </div>
 
         {/* Workspace: Chat + Output */}
