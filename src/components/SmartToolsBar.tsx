@@ -17,6 +17,7 @@ interface SmartToolsBarProps {
 const tools = [
   { label: "PPT Maker", icon: Presentation, prompt: "__PPT_MAKER__", color: "text-blue-400" },
   { label: "Documentation", icon: FileText, prompt: "__DOC_GEN__", color: "text-amber-400" },
+  { label: "Image Enhancer", icon: Wand2, prompt: "__IMAGE_ENHANCER__", color: "text-rose-400" },
   { label: "Code Gen", icon: Code, prompt: "Generate clean, production-ready code for: ", color: "text-green-400" },
   { label: "UI Builder", icon: Layout, prompt: "Generate a modern responsive UI component for: ", color: "text-purple-400" },
   { label: "Error Solver", icon: Bug, prompt: "Debug and fix this error: ", color: "text-red-400" },
