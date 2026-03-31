@@ -293,7 +293,7 @@ const Index = () => {
 
         {/* Smart Tools Bar */}
         <div className="px-4 md:px-6 py-2 border-b border-border/30">
-          <SmartToolsBar onToolAction={handleToolAction} onOpenPPTMaker={() => setPptMakerOpen(true)} onOpenDocGen={() => setDocGenOpen(true)} />
+          <SmartToolsBar onToolAction={handleToolAction} onOpenPPTMaker={() => setPptMakerOpen(true)} onOpenDocGen={() => setDocGenOpen(true)} onOpenImageEnhancer={() => setImageEnhancerOpen(true)} />
         </div>
 
         {/* Workspace: Chat + Output */}
