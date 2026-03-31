@@ -6,12 +6,14 @@ import {
   Image,
   Sparkles,
   FileText,
+  Wand2,
 } from "lucide-react";
 
 interface SmartToolsBarProps {
   onToolAction: (prompt: string) => void;
   onOpenPPTMaker: () => void;
   onOpenDocGen: () => void;
+  onOpenImageEnhancer: () => void;
 }
 
 const tools = [
