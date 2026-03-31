@@ -35,6 +35,7 @@ const Index = () => {
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [pptMakerOpen, setPptMakerOpen] = useState(false);
   const [docGenOpen, setDocGenOpen] = useState(false);
+  const [imageEnhancerOpen, setImageEnhancerOpen] = useState(false);
   const [outputOpen, setOutputOpen] = useState(false);
   const [userName, setUserName] = useState<string | undefined>();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
