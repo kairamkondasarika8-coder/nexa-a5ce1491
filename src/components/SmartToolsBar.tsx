@@ -25,12 +25,14 @@ const tools = [
   { label: "Enhance", icon: Sparkles, prompt: "Improve and enhance the following: ", color: "text-cyan-400" },
 ];
 
-const SmartToolsBar = ({ onToolAction, onOpenPPTMaker, onOpenDocGen }: SmartToolsBarProps) => {
+const SmartToolsBar = ({ onToolAction, onOpenPPTMaker, onOpenDocGen, onOpenImageEnhancer }: SmartToolsBarProps) => {
   const handleClick = (tool: (typeof tools)[0]) => {
     if (tool.prompt === "__PPT_MAKER__") {
       onOpenPPTMaker();
     } else if (tool.prompt === "__DOC_GEN__") {
       onOpenDocGen();
+    } else if (tool.prompt === "__IMAGE_ENHANCER__") {
+      onOpenImageEnhancer();
     } else {
       onToolAction(tool.prompt);
     }
