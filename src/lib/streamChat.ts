@@ -1,5 +1,6 @@
 import type { AIMode } from "@/components/ModeSelector";
 import { toast } from "@/hooks/use-toast";
+import { SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY } from "@/lib/config";
 
 type Msg = { role: "user" | "assistant"; content: string };
 
@@ -14,13 +15,13 @@ export async function streamChat({
   onDelta: (deltaText: string) => void;
   onDone: () => void;
 }) {
-  const CHAT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/chat`;
+  const CHAT_URL = `${SUPABASE_URL}/functions/v1/chat`;
 
   const resp = await fetch(CHAT_URL, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
+      Authorization: `Bearer ${SUPABASE_PUBLISHABLE_KEY}`,
     },
     body: JSON.stringify({
       messages: messages.map((m) => ({ role: m.role, content: m.content })),
