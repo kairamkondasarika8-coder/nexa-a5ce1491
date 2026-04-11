@@ -7,6 +7,7 @@ import {
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import ReactMarkdown from "react-markdown";
+import { SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY } from "@/lib/config";
 
 interface DocumentationGeneratorProps {
   isOpen: boolean;
@@ -77,12 +78,12 @@ const DocumentationGenerator = ({ isOpen, onClose }: DocumentationGeneratorProps
     const prompt = buildPrompt(sectionName, true);
 
     const resp = await fetch(
-      `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/chat`,
+      `${SUPABASE_URL}/functions/v1/chat`,
       {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
+          Authorization: `Bearer ${SUPABASE_PUBLISHABLE_KEY}`,
         },
         body: JSON.stringify({
           messages: [
