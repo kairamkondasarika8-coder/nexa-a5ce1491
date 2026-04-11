@@ -2,7 +2,6 @@ import { useState, useRef, useCallback } from "react";
 import { X, Upload, Download, Sparkles, ImageIcon, Loader2, ArrowRight, RotateCcw } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { toast } from "@/hooks/use-toast";
-import { SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY } from "@/lib/config";
 
 interface ImageEnhancerProps {
   isOpen: boolean;
@@ -65,12 +64,12 @@ const ImageEnhancer = ({ isOpen, onClose }: ImageEnhancerProps) => {
 
     try {
       const resp = await fetch(
-        `${SUPABASE_URL}/functions/v1/enhance-image`,
+        `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/enhance-image`,
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${SUPABASE_PUBLISHABLE_KEY}`,
+            Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
           },
           body: JSON.stringify({ imageBase64: originalImage, style: selectedStyle }),
         }
